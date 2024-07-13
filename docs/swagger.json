@@ -19,6 +19,237 @@
 
 
   "paths":{
+    "/user/register": {
+      "post": {
+        "tags": ["UserAuth"],
+        "summary": "Create a new user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Account created successfully"
+          },
+          "400": {
+            "description": "Email do not match"
+          },
+          "409": {
+            "description": "Email already exists"
+          }
+        }
+      }
+    },
+    "/user/login": {
+      "post": {
+        "tags": ["UserAuth"],
+        "summary": "Login a user",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "password"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Login successful, return data plus tokens"
+          },
+          "401": {
+            "description": "Not verified"
+          },
+          "403": {
+            "description": "Wrong email or password"
+          }
+        }
+      }
+    },
+    "/user/otp_request": {
+      "post": {
+        "tags": ["UserAuth"],
+        "summary": "Request a new OTP",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP sent successfully, return data"
+          },
+          "400": {
+            "description": "Invalid email address"
+          }
+        }
+      }
+    },
+    "/user/account_verification_otp": {
+      "post": {
+        "tags": ["UserAuth"],
+        "summary": "Verify a new user's email address account",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["email", "otp"],
+                "properties": {
+                  "email": {
+                    "type": "string",
+                    "format": "email"
+                  },
+                  "otp": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Account successfully verified"
+          },
+          "400": {
+            "description": "Invalid OTP"
+          },
+          "410": {
+            "description": "OTP expired"
+          }
+        }
+      }
+    },
+    "/user/verify_otp": {
+      "post": {
+        "tags": ["UserAuth"],
+        "summary": "Verify OTP for various activities",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["otp"],
+                "properties": {
+                  "otp": {
+                    "type": "integer"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OTP successfully verified"
+          },
+          "400": {
+            "description": "Invalid OTP"
+          },
+          "410": {
+            "description": "OTP expired"
+          }
+        }
+      }
+    },
+    "/user/reset_password": {
+      "post": {
+        "tags": ["UserAuth"],
+        "summary": "Reset password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["old_password", "new_password", "confirm_new_password"],
+                "properties": {
+                  "old_password": {
+                    "type": "string"
+                  },
+                  "new_password": {
+                    "type": "string"
+                  },
+                  "confirm_new_password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully"
+          },
+          "400": {
+            "description": "Incorrect old password"
+          }
+        }
+      }
+    },
+    "/user/forget_password": {
+      "post": {
+        "tags": ["UserAuth"],
+        "summary": "Forgot password",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": ["new_password", "confirm_new_password"],
+                "properties": {
+                  "new_password": {
+                    "type": "string"
+                  },
+                  "confirm_new_password": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Password reset successfully"
+          }
+        }
+      }
+    },
     "/organisation": {
       "post":{
         "tags": ["Organisation"],
@@ -93,7 +324,7 @@
         }
       }
     },
-  "/organisation/{id}": {
+    "/organisation/{id}": {
     "get": {
       "tags": ["Organisation"],
       "summary": "find organisation by id",
@@ -250,9 +481,9 @@
         }
       }
     }
-  },
+    },
 
-  "/contents" : {
+    "/contents" : {
     "get" : {
       "tags" : [ "Contents" ],
       "summary" : "Read all contents in the blog",
@@ -294,9 +525,9 @@
         }
       }
     }
-  },
+    },
 
-  "/content/{id}" : {
+    "/content/{id}" : {
     "get" : {
       "tags" : [ "Contents" ],
       "summary" : "Get a content by ID",
@@ -386,8 +617,8 @@
         }
       }
     }
-  },
-  "/contents/{userId}" : {
+    },
+    "/contents/{userId}" : {
     "get" : {
       "tags" : [ "Contents" ],
       "summary" : "Read all contents for a particular set",
@@ -421,8 +652,8 @@
         }
       }
     }
-  },
-  "/users" : {
+    },
+    "/users" : {
     "get" : {
       "tags" : [ "Users" ],
       "summary" : "Read all users",
@@ -445,8 +676,8 @@
         }
       }
     }
-  },
-  "/users/{id}" : {
+    },
+    "/users/{id}" : {
     "get" : {
       "tags" : [ "Users" ],
       "summary" : "Read a user by ID",
@@ -536,9 +767,9 @@
         }
       }
     }
-  },
+    },
 
-  "/contacts" : {
+    "/contacts" : {
     "post" : {
       "tags" : [ "Contacts" ],
       "summary" : "Create a new contact message",
@@ -561,8 +792,8 @@
         }
       }
     }
-  }
-},
+    }
+  },
 
 
 
@@ -583,8 +814,73 @@
       }
     },
     "schemas": {
-
-
+      "User": {
+        "type": "object",
+        "required": ["email", "password"],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
+          },
+          "password": {
+            "type": "string"
+          },
+          "username": {
+            "type": "string"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          },
+          "profile_picture": {
+            "type": "string"
+          },
+          "role": {
+            "type": "string"
+          },
+          "isverified": {
+            "type": "boolean"
+          },
+          "verified_at": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "default": "current_timestamp"
+          },
+          "updated_at": {
+            "type": "string",
+            "format": "date-time",
+            "default": "current_timestamp"
+          }
+        }
+      },
+      "UserOtp": {
+        "type": "object",
+        "required": ["userId"],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "userId": {
+            "type": "string"
+          },
+          "otp": {
+            "type": "integer"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time"
+          }
+        }
+      },
       "inline_response_200" : {
         "type" : "object",
         "properties" : {
