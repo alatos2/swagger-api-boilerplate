@@ -93,7 +93,7 @@
           }
         }
       }
-    }
+    },
   
     "/user/otp_request": {
       "post": {
