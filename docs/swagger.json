@@ -83,6 +83,18 @@
         }
       }
     },
+  
+    "/auth/logout": {
+      "post": {
+        "summary": "Logout a user",
+        "responses": {
+          "200": {
+            "description": "OK"
+          }
+        }
+      }
+    }
+  
     "/user/otp_request": {
       "post": {
         "tags": ["UserAuth"],
