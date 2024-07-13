@@ -16,6 +16,8 @@
         "description": "All actions by the organisation"
       }
     ],
+
+
     "paths":{
       "/organisation": {
         "post":{
@@ -248,8 +250,304 @@
           }
         }
       }
-    }
-  },
+    },
+
+    "/contents" : {
+      "get" : {
+        "tags" : [ "Contents" ],
+        "summary" : "Read all contents in the blog",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/inline_response_200"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Contents" ],
+        "summary" : "Create a new content",
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/contents_body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Created"
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+
+    "/content/{id}" : {
+      "get" : {
+        "tags" : [ "Contents" ],
+        "summary" : "Get a content by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer",
+            "example" : 1
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Contents" ],
+        "summary" : "Update a content by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the content to update",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/content_id_body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Contents" ],
+        "summary" : "Delete a content by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the content to delete",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No content"
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
+    "/contents/{userId}" : {
+      "get" : {
+        "tags" : [ "Contents" ],
+        "summary" : "Read all contents for a particular set",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "ID of the set to retrieve contents from",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/inline_response_200"
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
+    "/users" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Read all users",
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "type" : "array",
+                  "items" : {
+                    "$ref" : "#/components/schemas/inline_response_200_1"
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request"
+          }
+        }
+      }
+    },
+    "/users/{id}" : {
+      "get" : {
+        "tags" : [ "Users" ],
+        "summary" : "Read a user by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the user to read",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "OK",
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/inline_response_200_1"
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Users" ],
+        "summary" : "Update a user by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the user to update",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "requestBody" : {
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/users_id_body"
+              }
+            }
+          },
+          "required" : true
+        },
+        "responses" : {
+          "200" : {
+            "description" : "OK"
+          },
+          "400" : {
+            "description" : "Bad request"
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Users" ],
+        "summary" : "Delete a user by ID",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of the user to delete",
+          "required" : true,
+          "style" : "simple",
+          "explode" : false,
+          "schema" : {
+            "type" : "integer"
+          }
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "No content"
+          },
+          "404" : {
+            "description" : "Not found"
+          }
+        }
+      }
+    },
+
+
+  
+
+       
+
+
+
+
+
+
     "components": {
       "securitySchemes": {
         "ApiKeyAuth": {
@@ -259,6 +557,117 @@
         }
       },
       "schemas": {
+
+
+        "inline_response_200" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "integer"
+            },
+            "title" : {
+              "type" : "string"
+            },
+            "description" : {
+              "type" : "string"
+            },
+            "user_id" : {
+              "type" : "integer"
+            }
+          }
+        },
+        "contents_body" : {
+          "required" : [ "description", "title", "user_id" ],
+          "type" : "object",
+          "properties" : {
+            "title" : {
+              "type" : "string"
+            },
+            "description" : {
+              "type" : "string"
+            },
+            "user_id" : {
+              "type" : "integer"
+            }
+          }
+        },
+        "content_id_body" : {
+          "required" : [ "description", "title", "user_id" ],
+          "type" : "object",
+          "properties" : {
+            "title" : {
+              "type" : "string"
+            },
+            "description" : {
+              "type" : "string"
+            },
+            "user_id" : {
+              "type" : "integer"
+            }
+          }
+        },
+        "inline_response_200_1" : {
+          "type" : "object",
+          "properties" : {
+            "id" : {
+              "type" : "integer"
+            },
+            "email" : {
+              "type" : "string"
+            },
+            "first_name" : {
+              "type" : "string"
+            },
+            "last_name" : {
+              "type" : "string"
+            },
+            "profile_picture" : {
+              "type" : "string"
+            },
+            "role" : {
+              "type" : "string"
+            },
+            "isverified" : {
+              "type" : "boolean"
+            },
+            "created_at" : {
+              "type" : "string",
+              "format" : "date-time"
+            },
+            "updated_at" : {
+              "type" : "string",
+              "format" : "date-time"
+            }
+          }
+        },
+        "users_id_body" : {
+          "required" : [ "email", "password" ],
+          "type" : "object",
+          "properties" : {
+            "email" : {
+              "type" : "string"
+            },
+            "password" : {
+              "type" : "string"
+            },
+            "first_name" : {
+              "type" : "string"
+            },
+            "last_name" : {
+              "type" : "string"
+            },
+            "profile_picture" : {
+              "type" : "string"
+            },
+            "role" : {
+              "type" : "string"
+            },
+            "isverified" : {
+              "type" : "boolean"
+            }
+          }
+        }, 
+
         "Organisation": {
           "type": "object",
           "properties": {
@@ -294,3 +703,6 @@
       }
     }
 }
+}
+
+      
