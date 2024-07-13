@@ -536,6 +536,31 @@
         }
       }
     }
+  },
+
+  "/contacts" : {
+    "post" : {
+      "tags" : [ "Contacts" ],
+      "summary" : "Create a new contact message",
+      "requestBody" : {
+        "content" : {
+          "application/json" : {
+            "schema" : {
+              "$ref" : "#/components/schemas/contact"
+            }
+          }
+        },
+        "required" : true
+      },
+      "responses" : {
+        "201" : {
+          "description" : "Created Successfully"
+        },
+        "400" : {
+          "description" : "Bad request"
+        }
+      }
+    }
   }
 },
 
@@ -698,6 +723,25 @@
           "updated_at":{
             "type": "string",
             "format": "date-time"
+          }
+        }
+      },
+
+      "contact" : {
+        "type" : "object",
+        "properties" : {
+          "id" : {
+            "type" : "string"
+          },
+          "message" : {
+            "type" : "string"
+          },
+          "phone" : {
+            "type" : "string"
+          },
+          "email": {
+            "type": "string",
+            "format": "email"
           }
         }
       }
