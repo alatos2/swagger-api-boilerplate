@@ -248,8 +248,63 @@
           }
         }
       }
-    }
-  },
+    },
+    "/contacts": {
+        "post":{
+          "tags": ["Contacts"],
+          "summary": "create a contact",
+          "security": [
+              {
+                "ApiKeyAuth": []
+              }
+            ],
+          "requestBody":{
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "message",
+                    "phone",
+                    "email"
+                  ],
+                  "properties":{
+                    "message": {
+                      "type": "string"
+                    },
+                    "phone": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type": "string",
+                      "format": "email"
+                    }
+                  }
+                }
+              }
+            },
+          "responses": {
+            "201": {
+              "description": "Contact message created successfully",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Contact"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input"
+            },
+            "422": {
+              "description": "Validation exception"
+            }
+          }
+        }
+      }
+    },
     "components": {
       "securitySchemes": {
         "ApiKeyAuth": {
@@ -290,7 +345,26 @@
               "format": "date-time"
             }
           }
+        },
+        "Contact": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "message": {
+              "type": "string"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            }
+          }
         }
       }
     }
+  }
 }
