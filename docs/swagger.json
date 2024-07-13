@@ -1,9 +1,9 @@
 {
   "openapi": "3.0.3",
   "info": {
-    "description": "This is a boiler plate",
+    "description": "API DESIGN",
     "version": "1.0.0",
-    "title": "Swagger Boilerplate - OpenAPI 3.0"
+    "title": "Team-Femon - OpenAPI 3.0"
   },
   "servers": [
     {
@@ -86,6 +86,7 @@
   
     "/auth/logout": {
       "post": {
+        "tags": ["UserAuth"],
         "summary": "Logout a user",
         "responses": {
           "200": {
