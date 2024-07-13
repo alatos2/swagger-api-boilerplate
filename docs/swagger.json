@@ -1,0 +1,296 @@
+{
+    "openapi": "3.0.3",
+    "info": {
+      "description": "This is a boiler plate",
+      "version": "1.0.0",
+      "title": "Swagger Boilerplate - OpenAPI 3.0"
+    },
+    "servers": [
+      {
+        "url": "{base_url}/api/v1"
+      }
+    ],
+    "tags": [
+      {
+        "name": "Organisation",
+        "description": "All actions by the organisation"
+      }
+    ],
+    "paths":{
+      "/organisation": {
+        "post":{
+          "tags": ["Organisation"],
+          "summary": "create an organisation",
+          "security": [
+              {
+                "ApiKeyAuth": []
+              }
+            ],
+          "requestBody":{
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "userId",
+                    "name",
+                    "address",
+                    "email",
+                    "phone",
+                    "created_at",
+                    "updated_at"
+                  ],
+                  "properties":{
+                    "userid": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type":"string",
+                      "format": "email"
+                    },
+                    "phone": {
+                      "type":"string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type":"string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "responses": {
+            "201": {
+              "description": "Successfull operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Organisation"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid input"
+            },
+            "422": {
+              "description": "Validation exception"
+            }
+          }
+        }
+      },
+    "/organisation/{id}": {
+      "get": {
+        "tags": ["Organisation"],
+        "summary": "find organisation by id",
+        "security": [
+            {
+              "ApiKeyAuth": []
+            }
+          ],
+          "parameters": [
+            {
+              "name": "id",
+              "in": "path",
+              "required": true,
+              "schema": {
+                "type": "string"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Successful operation",
+              "content": {
+                "application/json": {
+                  "schema": {
+                    "$ref": "#/components/schemas/Organisation"
+                  }
+                }
+              }
+            },
+            "400": {
+              "description": "Invalid id supplied"
+            },
+            "404": {
+              "description": "organisation not found"
+            }
+          }
+        },
+      "put": {
+        "tags": ["Organisation"],
+        "summary": "update an organisation",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }  
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required":true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+          "requestBody":{
+            "required": true,
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": [
+                    "userId",
+                    "name",
+                    "address",
+                    "email",
+                    "phone",
+                    "created_at",
+                    "updated_at"
+                  ],
+                  "properties":{
+                    "userid": {
+                      "type": "string"
+                    },
+                    "name": {
+                      "type": "string"
+                    },
+                    "address": {
+                      "type": "string"
+                    },
+                    "email": {
+                      "type":"string",
+                      "format": "email"
+                    },
+                    "phone": {
+                      "type":"string"
+                    },
+                    "created_at": {
+                      "type": "string",
+                      "format": "date-time"
+                    },
+                    "updated_at": {
+                      "type":"string",
+                      "format": "date-time"
+                    }
+                  }
+                }
+              }
+            }
+          },
+        "responses": {
+          "200": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organisation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid id supplied"
+          },
+          "404": {
+            "description": "Organisation not found"
+          },
+          "422": {
+            "description": "Validation exception"
+          }
+        }
+    },
+    "delete": {
+        "tags": ["Organisation"],
+        "summary": "delete an organisation",
+        "security": [
+          {
+            "ApiKeyAuth": []
+          }  
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required":true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Organisation"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "invalid organisation id"
+          }
+        }
+      }
+    }
+  },
+    "components": {
+      "securitySchemes": {
+        "ApiKeyAuth": {
+          "type": "apiKey",
+          "in": "header",
+          "name": "authorization"
+        }
+      },
+      "schemas": {
+        "Organisation": {
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "string"
+            },
+            "userid": {
+              "type": "string"
+            },
+            "name": {
+              "type": "string"
+            },
+            "address": {
+              "type": "string"
+            },
+            "email": {
+              "type": "string",
+              "format": "email"
+            },
+            "phone": {
+              "type": "string"
+            },
+            "created_at": {
+              "type": "string",
+              "format": "date-time"
+            },
+            "updated_at":{
+              "type": "string",
+              "format": "date-time"
+            }
+          }
+        }
+      }
+    }
+}
